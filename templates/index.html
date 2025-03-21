@@ -3,57 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <title>cPanel Account Transfer</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .container { max-width: 600px; margin: 0 auto; }
+    fieldset { margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; }
+    legend { font-weight: bold; }
+    label { display: block; margin-bottom: 5px; }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+    }
+    input[type="submit"] {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    .message { padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; }
+    .message.error { background-color: #f8d7da; color: #721c24; }
+    .message.success { background-color: #d4edda; color: #155724; }
+    .message.warning { background-color: #fff3cd; color: #856404; }
+  </style>
 </head>
 <body>
-  <h1>Transfer cPanel Account</h1>
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul>
-      {% for message in messages %}
-        <li>{{ message }}</li>
-      {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
-  
-  <form method="POST">
-    <fieldset>
-      <legend>Source cPanel Details</legend>
-      <label for="source_host">Source Host:</label>
-      <input type="text" id="source_host" name="source_host" required><br>
+  <div class="container">
+    <h1>Transfer cPanel Account</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <form method="POST">
+      <fieldset>
+        <legend>Source cPanel Details</legend>
+        <label for="source_host">Source Host:</label>
+        <input type="text" id="source_host" name="source_host" required>
+        
+        <label for="source_user">Source Username:</label>
+        <input type="text" id="source_user" name="source_user" required>
+        
+        <label for="source_pass">Source Password:</label>
+        <input type="password" id="source_pass" name="source_pass" required>
+      </fieldset>
       
-      <label for="source_user">Source Username:</label>
-      <input type="text" id="source_user" name="source_user" required><br>
+      <fieldset>
+        <legend>Destination Server Details</legend>
+        <label for="destination_host">Destination Host:</label>
+        <input type="text" id="destination_host" name="destination_host" required>
+        
+        <label for="destination_root_user">Destination Root Username:</label>
+        <input type="text" id="destination_root_user" name="destination_root_user" required>
+        
+        <label for="destination_root_pass">Destination Root Password:</label>
+        <input type="password" id="destination_root_pass" name="destination_root_pass" required>
+      </fieldset>
       
-      <label for="source_pass">Source Password:</label>
-      <input type="password" id="source_pass" name="source_pass" required><br>
-    </fieldset>
-    
-    <fieldset>
-      <legend>Destination Server Details</legend>
-      <label for="destination_host">Destination Host:</label>
-      <input type="text" id="destination_host" name="destination_host" required><br>
+      <fieldset>
+        <legend>Account Details</legend>
+        <label for="username">Account Username:</label>
+        <input type="text" id="username" name="username" required>
+        
+        <label for="domain">Domain:</label>
+        <input type="text" id="domain" name="domain" required>
+        
+        <label>
+          <input type="checkbox" id="overwrite" name="overwrite"> Overwrite if exists
+        </label>
+      </fieldset>
       
-      <label for="destination_root_user">Destination Root Username:</label>
-      <input type="text" id="destination_root_user" name="destination_root_user" required><br>
-      
-      <label for="destination_root_pass">Destination Root Password:</label>
-      <input type="password" id="destination_root_pass" name="destination_root_pass" required><br>
-    </fieldset>
-    
-    <fieldset>
-      <legend>Account Details</legend>
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" required><br>
-      
-      <label for="domain">Domain:</label>
-      <input type="text" id="domain" name="domain" required><br>
-      
-      <label for="overwrite">Overwrite if exists:</label>
-      <input type="checkbox" id="overwrite" name="overwrite"><br>
-    </fieldset>
-    
-    <input type="submit" value="Transfer Account">
-  </form>
+      <input type="submit" value="Transfer Account">
+    </form>
+  </div>
 </body>
 </html>
