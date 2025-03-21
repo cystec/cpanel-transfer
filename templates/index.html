@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>cPanel Account Transfer</title>
+</head>
+<body>
+  <h1>Transfer cPanel Account</h1>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+  
+  <form method="POST">
+    <fieldset>
+      <legend>Source cPanel Details</legend>
+      <label for="source_host">Source Host:</label>
+      <input type="text" id="source_host" name="source_host" required><br>
+      
+      <label for="source_user">Source Username:</label>
+      <input type="text" id="source_user" name="source_user" required><br>
+      
+      <label for="source_pass">Source Password:</label>
+      <input type="password" id="source_pass" name="source_pass" required><br>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Destination Server Details</legend>
+      <label for="destination_host">Destination Host:</label>
+      <input type="text" id="destination_host" name="destination_host" required><br>
+      
+      <label for="destination_root_user">Destination Root Username:</label>
+      <input type="text" id="destination_root_user" name="destination_root_user" required><br>
+      
+      <label for="destination_root_pass">Destination Root Password:</label>
+      <input type="password" id="destination_root_pass" name="destination_root_pass" required><br>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Account Details</legend>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required><br>
+      
+      <label for="domain">Domain:</label>
+      <input type="text" id="domain" name="domain" required><br>
+      
+      <label for="overwrite">Overwrite if exists:</label>
+      <input type="checkbox" id="overwrite" name="overwrite"><br>
+    </fieldset>
+    
+    <input type="submit" value="Transfer Account">
+  </form>
+</body>
+</html>
